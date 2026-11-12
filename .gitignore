@@ -1,3 +1,34 @@
+# CMake / build (match à n'importe quelle profondeur, donc couvre DTrackSDK/build aussi)
+build/
+out/
+CMakeCache.txt
+CMakeFiles/
+CMakeUserPresets.json
+_deps/
+*.tlog
+compile_commands.json
+
+# Compilateurs / IDE
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.exe
+*.lib
+*.pdb
+*.ilk
+*.user
+.vs/
+x64/
+Debug/
+Release/
+
+# OS
+Thumbs.db
+.DS_Store
+
+
 ### TwinCAT3 ###
 # website: https://www.beckhoff.com/twincat3/
 
