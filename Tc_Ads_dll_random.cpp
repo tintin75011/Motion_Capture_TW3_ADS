@@ -7,13 +7,9 @@
 
 int main()                     
 {
-    long nTemp = AdsGetDllVersion();
-    AdsVersion* pDLLVersion = (AdsVersion*)&nTemp;
-    std::cout << "Version: "  << (int)pDLLVersion->version  << '\n';
-    std::cout << "Revision: " << (int)pDLLVersion->revision << '\n';
-    std::cout << "Build: "    << pDLLVersion->build         << '\n';
-    std::cout.flush();
-
-    _getch();                   
-    return 0;
+    ADSSTATE nAdsState;
+    USHORT nDeviceState;
+    long nErr, nPort;
+    AmsAddr Addr;
+    PAmsAddr pAddr = &Addr;
 }
