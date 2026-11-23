@@ -1,5 +1,5 @@
 # Motion_Capture_TW3_ADS
-Récupérer les données du motion capture via SDK ART C++ pour les écrire directement dans des variables TwinCAT3 via ADS
+Lire et écrire des variables dans TwinCAT3 depuis un script C++ avec la lib TcAdsDll. 
 
 ## Prérequis
 
@@ -17,15 +17,7 @@ Récupérer les données du motion capture via SDK ART C++ pour les écrire dire
 
 
 ## Installation
-
-```powershell
-# Cloner avec le submodule DTrackSDK
-git clone --recursive https://github.com/tintin75011/Motion_Capture_Camera_ART_Recorder.git
-cd Motion_Capture_Camera_ART_Recorder
-
-# Si le clone a été fait sans --recursive :
-git submodule update --init --recursive
-```
+Localiser l'emplacement des fichiers  `TcAdsDef.h` et` TcAdsAPI.h `et modifier la ligne 18 de votre `CMakeLists.txt` en conséquence:
 
 ## Build (C++)
 
@@ -60,5 +52,5 @@ cmake --build --preset vs2022-release
 ## Utilisation
 
 ```powershell
-.\build\Art_to_ads.exe
+.\build\Tc_ads_dll_random.exe
 ```
