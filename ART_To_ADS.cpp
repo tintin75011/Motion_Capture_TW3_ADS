@@ -5,11 +5,18 @@
 #include <csignal>
 #include <map>
 #include <string>
-
+#include <ws2tcpip.h>
 #include <winsock2.h>
+#include <windows.h>
+#include "TcAdsDef.h"
+#include "TcAdsAPI.h"
+#include <cstdint>
+
+
+
 #pragma comment(lib, "ws2_32.lib")
 
-// --- Arrêt propre avec Ctrl+C (rend le nettoyage en fin de main atteignable) ---
+// --- Arrêt propre avec Ctrl+C ---
 static volatile sig_atomic_t g_stop = 0;
 static void onSignal(int) { g_stop = 1; }
 
@@ -37,24 +44,38 @@ static void rotToEulerDeg(const double rot[9], double euler[3])
     euler[2] = yaw   * rad2deg;
 }
 
-// --- Noms des bodies : le SDK ne donne que l'ID, à vous d'associer un nom ---
+// --- Noms des bodies 
 static std::string bodyName(int id)
 {
     static const std::map<int, std::string> names = {
-        {0, "Body_0"},   // ex. {0, "Casque"}, {1, "Stylo"}, ...
+        {0, "Body_0"}, 
         {1, "Body_1"},
-        {2, "Body_2"},
+        {2, "Body_2(plateforme)"},
     };
     auto it = names.find(id);
     return (it != names.end()) ? it->second : ("Body_" + std::to_string(id));
 }
 
+void printAmsAddr(const AmsAddr& addr) {
+    std::cout << "addresse AMS : ";
+    for (int i = 0; i < 6; ++i) {
+        std::cout << static_cast<int>(addr.netId.b[i]);
+        if (i < 5) {
+            std::cout << ".";
+        }
+    }
+    std::cout << ":" << addr.port << std::endl;
+}
+
 int main()
 {
+    //************************************ 
+    //*********DTRACK INITIALIZATION **** 
+    //********************************** 
     const char* controllerIp = "192.168.1.1";   // IP du contrôleur DTrack
     const unsigned short port = 5000;           // port UDP local de réception DTrack
 
-    // --- Initialisation Winsock (obligatoire sous Windows, aussi pour les sockets internes du SDK) ---
+    // --- Initialisation Winsock ---
     WSADATA wsa;
     if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
         std::cerr << "Erreur WSAStartup\n";
@@ -81,6 +102,36 @@ int main()
 
     std::cout << std::fixed << std::setprecision(3);
 
+    //*****************************************
+    //*********TwinCAT ADS INITIALIZATION **** 
+    //*************************************** 
+    // étape 1 : ouvrir le port local
+    long nPort, nErr = 0;
+    nPort = AdsPortOpenEx();
+    AmsAddr addr;
+    PAmsAddr paddr = &addr;
+    //étape 2 : Construire l'addresse de la cible
+    nErr = AdsGetLocalAddressEx(nPort,paddr);
+    addr.port = 350;
+    printAmsAddr(addr);
+    if(nErr != 0){
+        std::cerr << "Erreur lors de l'ouverture du port Local : " << nErr << '\n' ; 
+    }
+
+    // étape 3 : obtenir les handleInputs des variables
+
+    char nameInputSymbol[] = "Object1 (Module1).Inputs.Value";
+    unsigned long handleInput =0;
+    unsigned long nRead = 0;
+    // get handleInput
+    nErr = AdsSyncReadWriteReqEx2(nPort, paddr,
+                            ADSIGRP_SYM_HNDBYNAME, 0,
+                            sizeof(handleInput), &handleInput,
+                            sizeof(nameInputSymbol), nameInputSymbol,
+                            &nRead);
+    if (nErr) { std::cerr << "nerr Input handle: " << nErr << '\n'; return 1; }
+
+    // étape 4 : boucle de lecture des données DTrack et écriture dans TwinCAT ADS
     while (!g_stop) {
         if (!dt->receive()) continue;   // timeout ou paquet ignoré
 
@@ -93,14 +144,22 @@ int main()
 
             std::cout << "=== " << bodyName(body->id)
                       << " (id " << body->id << ", qualite " << body->quality << ") ===\n";
+            
+            double x = body->loc[0];
 
             // Position (mm)
             std::cout << "Position [mm]        : x=" << body->loc[0]
                       << "  y=" << body->loc[1]
                       << "  z=" << body->loc[2] << "\n";
 
+            nErr = AdsSyncWriteReqEx(nPort, paddr,
+                        ADSIGRP_SYM_VALBYHND,   // écriture par handleInputdans TwinCAT
+                        handleInput,                 
+                        sizeof(body->loc[0]), &x);  // écriture de la position x
+
+            if (nErr) { std::cerr << "Write: " << nErr << '\n'; return 1; }
+
             // Rotation en angles d'Euler (degrés)
-            // (Sur les vieux SDK, body->ang[3] donnait directement les angles en degrés)
             std::cout << "Rotation Euler [deg] : roll=" << euler[0]
                       << "  pitch=" << euler[1]
                       << "  yaw=" << euler[2] << "\n";
@@ -117,7 +176,7 @@ int main()
         }
     }
 
-    // --- Nettoyage (atteignable grâce à Ctrl+C) ---
+    // --- Nettoyage  ---
     dt->stopMeasurement();
     delete dt;
     WSACleanup();
