@@ -142,15 +142,15 @@ int main()
             double euler[3];
             rotToEulerDeg(body->rot, euler);
 
-            std::cout << "=== " << bodyName(body->id)
-                      << " (id " << body->id << ", qualite " << body->quality << ") ===\n";
+            // std::cout << "=== " << bodyName(body->id)
+            //           << " (id " << body->id << ", qualite " << body->quality << ") ===\n";
             
             double x = body->loc[0];
 
-            // Position (mm)
-            std::cout << "Position [mm]        : x=" << body->loc[0]
-                      << "  y=" << body->loc[1]
-                      << "  z=" << body->loc[2] << "\n";
+            // // Position (mm)
+            // std::cout << "Position [mm]        : x=" << body->loc[0]
+            //           << "  y=" << body->loc[1]
+            //           << "  z=" << body->loc[2] << "\n";
 
             nErr = AdsSyncWriteReqEx(nPort, paddr,
                         ADSIGRP_SYM_VALBYHND,   // écriture par handleInputdans TwinCAT
@@ -159,20 +159,20 @@ int main()
 
             if (nErr) { std::cerr << "Write Error: " << nErr << '\n'; return 1; }
 
-            // Rotation en angles d'Euler (degrés)
-            std::cout << "Rotation Euler [deg] : roll=" << euler[0]
-                      << "  pitch=" << euler[1]
-                      << "  yaw=" << euler[2] << "\n";
+            // // Rotation en angles d'Euler (degrés)
+            // std::cout << "Rotation Euler [deg] : roll=" << euler[0]
+            //           << "  pitch=" << euler[1]
+            //           << "  yaw=" << euler[2] << "\n";
 
             // Matrice de rotation 3x3, affichée ligne par ligne
             // (rot[] est column-wise : la ligne L contient rot[L], rot[L+3], rot[L+6])
-            std::cout << "Matrice de rotation  :\n";
-            for (int l = 0; l < 3; l++) {
-                std::cout << "  [ " << std::setw(9) << body->rot[l]
-                          << "  " << std::setw(9) << body->rot[l + 3]
-                          << "  " << std::setw(9) << body->rot[l + 6] << " ]\n";
-            }
-            std::cout << "\n";
+            // std::cout << "Matrice de rotation  :\n";
+            // for (int l = 0; l < 3; l++) {
+            //     std::cout << "  [ " << std::setw(9) << body->rot[l]
+            //               << "  " << std::setw(9) << body->rot[l + 3]
+            //               << "  " << std::setw(9) << body->rot[l + 6] << " ]\n";
+            // }
+            // std::cout << "\n";
         }
     }
 
