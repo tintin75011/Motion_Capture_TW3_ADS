@@ -100,7 +100,7 @@
             <Name>Data</Name>
             <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
           </Symbol>
-        </DataArea><DataArea><AreaNo AreaType="InputDst">3</AreaNo><Name>Body_Loc</Name><ContextId>1</ContextId><Symbol><Name>Body_1</Name><BaseType GUID="{f67908ca-622f-4db3-9cb7-87f18b5841a7}">Body</BaseType></Symbol><Symbol><Name>Body_2</Name><BaseType GUID="{f67908ca-622f-4db3-9cb7-87f18b5841a7}">Body</BaseType></Symbol><Symbol><Name>Body_3</Name><BaseType GUID="{f67908ca-622f-4db3-9cb7-87f18b5841a7}">Body</BaseType></Symbol></DataArea>
+        </DataArea><DataArea><AreaNo AreaType="InputDst" CreateSymbols="true">3</AreaNo><Name>Body_Loc</Name><ContextId>1</ContextId><Symbol><Name>Body_1</Name><BaseType GUID="{f67908ca-622f-4db3-9cb7-87f18b5841a7}">Body</BaseType></Symbol><Symbol><Name>Body_2</Name><BaseType GUID="{f67908ca-622f-4db3-9cb7-87f18b5841a7}">Body</BaseType></Symbol><Symbol><Name>Body_3</Name><BaseType GUID="{f67908ca-622f-4db3-9cb7-87f18b5841a7}">Body</BaseType></Symbol></DataArea>
       </DataAreas>
       <InterfacePointers>
         <InterfacePointer>

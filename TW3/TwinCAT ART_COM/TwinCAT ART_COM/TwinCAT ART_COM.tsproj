@@ -217,7 +217,7 @@
 								</Symbol>
 							</DataArea>
 							<DataArea>
-								<AreaNo AreaType="InputDst">3</AreaNo>
+								<AreaNo AreaType="InputDst" CreateSymbols="true" CreateSymbolAreaType="true" CreateDataType="DAT_Module1_Body_Loc">3</AreaNo>
 								<Name>Body_Loc</Name>
 								<ContextId>1</ContextId>
 								<ByteSize>792</ByteSize>

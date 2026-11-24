@@ -120,7 +120,7 @@ int main()
 
     // étape 3 : obtenir les handleInputs des variables
 
-    char nameInputSymbol[] = "Object1 (Module1).Inputs.Value";
+    char nameInputSymbol[] = "Object1 (Module1).Body_Loc.Body_1.Loc.X";
     unsigned long handleInput =0;
     unsigned long nRead = 0;
     // get handleInput
@@ -157,7 +157,7 @@ int main()
                         handleInput,                 
                         sizeof(body->loc[0]), &x);  // écriture de la position x
 
-            if (nErr) { std::cerr << "Write: " << nErr << '\n'; return 1; }
+            if (nErr) { std::cerr << "Write Error: " << nErr << '\n'; return 1; }
 
             // Rotation en angles d'Euler (degrés)
             std::cout << "Rotation Euler [deg] : roll=" << euler[0]
