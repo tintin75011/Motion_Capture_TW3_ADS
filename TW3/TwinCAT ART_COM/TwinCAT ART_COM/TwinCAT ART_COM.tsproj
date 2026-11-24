@@ -1,14 +1,104 @@
 <?xml version="1.0"?>
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.20">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{CFEFD887-79C8-4281-99DE-4D28E4B45180}">Loc</Name>
+			<BitSize>192</BitSize>
+			<SubItem>
+				<Name>X</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Y</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Z</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{C5C7F732-99F0-4B6D-81DD-02D52A72761E}">Rot</Name>
+			<BitSize>192</BitSize>
+			<SubItem>
+				<Name>Rot_X</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Rot_Y</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Rot_Z</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<Hides>
+				<Hide GUID="{DB07D40E-2ED0-4A0E-AA64-AEC33BD19B3E}"/>
+				<Hide GUID="{A86B8BCA-8916-4EC2-9033-C392B7EE91D9}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{4938019F-11F0-4FBB-83CC-F88B91876624}">Rot_Matrice</Name>
+			<BitSize>1728</BitSize>
+			<BaseType GUID="{CFEFD887-79C8-4281-99DE-4D28E4B45180}">Loc</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>9</Elements>
+			</ArrayInfo>
+			<Hides>
+				<Hide GUID="{6536376B-02E4-40DC-839B-65A3A73A9D16}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{F67908CA-622F-4DB3-9CB7-87F18B5841A7}">Body</Name>
+			<BitSize>2112</BitSize>
+			<SubItem>
+				<Name>Loc</Name>
+				<Type GUID="{CFEFD887-79C8-4281-99DE-4D28E4B45180}">Loc</Type>
+				<BitSize>192</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Rot</Name>
+				<Type GUID="{C5C7F732-99F0-4B6D-81DD-02D52A72761E}">Rot</Type>
+				<BitSize>192</BitSize>
+				<BitOffs>192</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Rot_Matrice</Name>
+				<Type GUID="{4938019F-11F0-4FBB-83CC-F88B91876624}">Rot_Matrice</Type>
+				<BitSize>1728</BitSize>
+				<BitOffs>384</BitOffs>
+			</SubItem>
+			<Hides>
+				<Hide GUID="{266EED2A-79BD-47C2-B183-B7BE6C2D9A57}"/>
+				<Hide GUID="{1789310A-5538-4EAA-A12A-389E4BE840BD}"/>
+				<Hide GUID="{16D76D3D-FEC1-4559-9F27-72435BCC3FD8}"/>
+			</Hides>
+		</DataType>
+	</DataTypes>
 	<Project ProjectGUID="{2DFDAF89-0E4B-47C3-9CEC-9E7B4AC44D2A}" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
+			<Settings MaxCpus="32" PCoreAffinity="65535" ECoreAffinity="4294901760"/>
 			<Tasks>
 				<Task Id="2" Priority="1" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>Task 2</Name>
 				</Task>
 			</Tasks>
 			<Modules>
-				<Module Id="#x01010010" KeepUnrestoredLinks="2" ClassFactoryId="C++ Module Vendor|ADS_COM|0.0.0.1">
+				<Module Id="#x01010010" KeepUnrestoredLinks="2" AutoReloadTmc="true" ClassFactoryId="C++ Module Vendor|ADS_COM|0.0.0.1">
 					<Name>Object1 (Module1)</Name>
 					<TmcDesc GUID="{9904272C-8CB5-47AC-9953-B3CEC9434D5E}" ClassFactoryId="C++ Module Vendor|ADS_COM|0.0.0.1">
 						<Name>Module1</Name>
@@ -124,6 +214,30 @@
 									<BitSize>32</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
 									<BitOffs>64</BitOffs>
+								</Symbol>
+							</DataArea>
+							<DataArea>
+								<AreaNo AreaType="InputDst">3</AreaNo>
+								<Name>Body_Loc</Name>
+								<ContextId>1</ContextId>
+								<ByteSize>792</ByteSize>
+								<Symbol>
+									<Name>Body_1</Name>
+									<BitSize>2112</BitSize>
+									<BaseType GUID="{F67908CA-622F-4DB3-9CB7-87F18B5841A7}">Body</BaseType>
+									<BitOffs>0</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>Body_2</Name>
+									<BitSize>2112</BitSize>
+									<BaseType GUID="{F67908CA-622F-4DB3-9CB7-87F18B5841A7}">Body</BaseType>
+									<BitOffs>2112</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>Body_3</Name>
+									<BitSize>2112</BitSize>
+									<BaseType GUID="{F67908CA-622F-4DB3-9CB7-87F18B5841A7}">Body</BaseType>
+									<BitOffs>4224</BitOffs>
 								</Symbol>
 							</DataArea>
 						</DataAreas>
