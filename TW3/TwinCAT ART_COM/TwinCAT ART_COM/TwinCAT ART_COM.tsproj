@@ -50,20 +50,21 @@
 			</Hides>
 		</DataType>
 		<DataType>
-			<Name GUID="{4938019F-11F0-4FBB-83CC-F88B91876624}">Rot_Matrice</Name>
-			<BitSize>1728</BitSize>
-			<BaseType GUID="{CFEFD887-79C8-4281-99DE-4D28E4B45180}">Loc</BaseType>
+			<Name GUID="{16AE1FCD-5DE0-4299-9F5E-2B1DAF27F13C}">Rot_Matrice</Name>
+			<BitSize>576</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
 				<Elements>9</Elements>
 			</ArrayInfo>
 			<Hides>
 				<Hide GUID="{6536376B-02E4-40DC-839B-65A3A73A9D16}"/>
+				<Hide GUID="{4938019F-11F0-4FBB-83CC-F88B91876624}"/>
 			</Hides>
 		</DataType>
 		<DataType>
-			<Name GUID="{F67908CA-622F-4DB3-9CB7-87F18B5841A7}">Body</Name>
-			<BitSize>2112</BitSize>
+			<Name GUID="{0AE44625-B37D-473A-937A-0DC14B07ACBC}">Body</Name>
+			<BitSize>960</BitSize>
 			<SubItem>
 				<Name>Loc</Name>
 				<Type GUID="{CFEFD887-79C8-4281-99DE-4D28E4B45180}">Loc</Type>
@@ -78,14 +79,15 @@
 			</SubItem>
 			<SubItem>
 				<Name>Rot_Matrice</Name>
-				<Type GUID="{4938019F-11F0-4FBB-83CC-F88B91876624}">Rot_Matrice</Type>
-				<BitSize>1728</BitSize>
+				<Type GUID="{16AE1FCD-5DE0-4299-9F5E-2B1DAF27F13C}">Rot_Matrice</Type>
+				<BitSize>576</BitSize>
 				<BitOffs>384</BitOffs>
 			</SubItem>
 			<Hides>
 				<Hide GUID="{266EED2A-79BD-47C2-B183-B7BE6C2D9A57}"/>
 				<Hide GUID="{1789310A-5538-4EAA-A12A-389E4BE840BD}"/>
 				<Hide GUID="{16D76D3D-FEC1-4559-9F27-72435BCC3FD8}"/>
+				<Hide GUID="{F67908CA-622F-4DB3-9CB7-87F18B5841A7}"/>
 			</Hides>
 		</DataType>
 	</DataTypes>
@@ -220,24 +222,24 @@
 								<AreaNo AreaType="InputDst" CreateSymbols="true" CreateSymbolAreaType="true" CreateDataType="DAT_Module1_Body_Loc">3</AreaNo>
 								<Name>Body_Loc</Name>
 								<ContextId>1</ContextId>
-								<ByteSize>792</ByteSize>
+								<ByteSize>360</ByteSize>
 								<Symbol>
 									<Name>Body_1</Name>
-									<BitSize>2112</BitSize>
-									<BaseType GUID="{F67908CA-622F-4DB3-9CB7-87F18B5841A7}">Body</BaseType>
+									<BitSize>960</BitSize>
+									<BaseType GUID="{0AE44625-B37D-473A-937A-0DC14B07ACBC}">Body</BaseType>
 									<BitOffs>0</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>Body_2</Name>
-									<BitSize>2112</BitSize>
-									<BaseType GUID="{F67908CA-622F-4DB3-9CB7-87F18B5841A7}">Body</BaseType>
-									<BitOffs>2112</BitOffs>
+									<BitSize>960</BitSize>
+									<BaseType GUID="{0AE44625-B37D-473A-937A-0DC14B07ACBC}">Body</BaseType>
+									<BitOffs>960</BitOffs>
 								</Symbol>
 								<Symbol>
 									<Name>Body_3</Name>
-									<BitSize>2112</BitSize>
-									<BaseType GUID="{F67908CA-622F-4DB3-9CB7-87F18B5841A7}">Body</BaseType>
-									<BitOffs>4224</BitOffs>
+									<BitSize>960</BitSize>
+									<BaseType GUID="{0AE44625-B37D-473A-937A-0DC14B07ACBC}">Body</BaseType>
+									<BitOffs>1920</BitOffs>
 								</Symbol>
 							</DataArea>
 						</DataAreas>
