@@ -31,11 +31,16 @@ if(NOT TCADS_LIB)
 endif()
 
 # --- Création de la cible ---
-add_executable(Art_to_ads ART_To_ADS.cpp)
+add_executable(Art_to_ads
+    ART_To_ADS.cpp
+    IpFinder.cpp
+    IpFinder.h
+)
 
 # --- Dépendances système ---
 if(WIN32)
-    target_link_libraries(Art_to_ads PRIVATE ws2_32 winmm)
+    # iphlpapi : GetAdaptersAddresses / IcmpSendEcho2Ex
+    target_link_libraries(Art_to_ads PRIVATE ws2_32 winmm iphlpapi)
 else()
     find_package(Threads REQUIRED)
     target_link_libraries(Art_to_ads PRIVATE Threads::Threads)
@@ -43,5 +48,7 @@ endif()
 
 # --- Lien avec DTrack SDK et TcAdsDll ---
 target_link_libraries(Art_to_ads PRIVATE DTrackSDK_LIB)
-target_include_directories(Art_to_ads PRIVATE "${TCADS_ROOT}/Include")
+target_include_directories(Art_to_ads PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${TCADS_ROOT}/Include")
 target_link_libraries(Art_to_ads PRIVATE "${TCADS_LIB}")

@@ -17,7 +17,7 @@
 #include "TcAdsDef.h"
 #include "TcAdsAPI.h"
 #include <cstdint>
-
+#include "IpFinder.h"
 #pragma comment(lib, "ws2_32.lib")
 
 // ============================================================
@@ -28,6 +28,7 @@ static const unsigned short DTRACK_PORT    = 5000;            // port UDP local 
 static const int            TARGET_BODY_ID = 1;               // body à transmettre à TwinCAT
 static const unsigned long  ADS_PORT       = 350;             // port du runtime hébergeant le symbole
 static char                 ADS_SYMBOL[]   = "Object1 (Module1).Body_Loc.Body_1";
+
 
 // ============================================================
 //  Structure échangée avec TwinCAT (disposition mémoire IDENTIQUE à la STRUCT côté TwinCAT)
@@ -228,7 +229,28 @@ int main()
     }
 
     // --- DTrack ---
+
+    // --- set Ip Adress ---
+    IpFinder finder(CONTROLLER_IP);
+    std::string monIp;
+
+    if (finder.findInterfaceReachingTarget()) {
+        monIp = finder.reachingIp(); 
+        std::cout << "Interface locale trouvée : " << finder.reachingInterface().name
+                  << " (" << monIp << ")\n";  
+    }else {
+        std::cerr << "Aucune interface locale ne peut atteindre " << CONTROLLER_IP << "\n";
+        AdsSyncWriteReqEx(nPort, &addr, ADSIGRP_SYM_RELEASEHND, 0, sizeof(hBody), &hBody);
+        AdsPortCloseEx(nPort);
+        WSACleanup();
+        return 1;
+    }
+
     DTrackSDK* dt = new DTrackSDK(CONTROLLER_IP, DTRACK_PORT);
+
+    std::string command = "dtrack2 set output net ch01 udp " + monIp + " 5000";
+    std::string response = "";
+    dt->sendDTrack2Command(command, &response);
 
     if (!dt->isCommandInterfaceValid()) {
         std::cerr << "Connexion au controleur impossible\n";
