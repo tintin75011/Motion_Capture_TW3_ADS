@@ -35,6 +35,14 @@ add_executable(Art_to_ads
     ART_To_ADS.cpp
     IpFinder.cpp
     IpFinder.h
+    ads.cpp
+    ads.h
+    utils.cpp
+    utils.h
+    shared.cpp
+    shared.h
+    art.cpp
+    art.h
 )
 
 # --- Dépendances système ---
