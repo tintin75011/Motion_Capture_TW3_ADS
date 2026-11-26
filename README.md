@@ -5,7 +5,7 @@ Récupérer les données du motion capture via SDK ART C++ pour les print dans l
 
 ### C++ (build de `Art_to_ads.exe`)
 
-- **CMake ≥ 3.25** (4.x recommandé)
+- **CMake ≥ 3.18** 
 - **Ninja** + **MinGW-w64 (g++)** — configuration par défaut
   ```powershell
   winget install Kitware.CMake
